@@ -80,8 +80,8 @@ void merge(int arr[], int low, int middle, int high){
     int sizeSub1 = middle - low + 1;
     int sizeSub2 = high - middle;
 
-    int sub1[sizeSub1];
-    int sub2[sizeSub2];
+    int *sub1 = new int[sizeSub1];
+    int *sub2 = new int[sizeSub2];
 
     for(int i = 0; i < sizeSub1; i++){
         sub1[i] = arr[low+i];
@@ -107,12 +107,13 @@ void merge(int arr[], int low, int middle, int high){
         y++;
         z++;
     }
-
+    delete[] sub1;
+    delete[] sub2;
 }
 
 void mergeSort(int arr[], int low, int high){ //O(nlogn) guarantee
     if(low < high){
-        int middle = (low + high) / 2;
+        int middle = low + (high - low) / 2;
         mergeSort(arr, low, middle);
         mergeSort(arr, middle + 1, high);
         merge(arr, low, middle, high);

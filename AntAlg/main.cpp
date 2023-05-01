@@ -9,8 +9,8 @@ int main(int argc, char * argv[]){ //Some Demonstrated Use of the Class "sortJec
     cout << "In Main: Testing sortJect..." << endl;
 
     sortJect arr1(10000); //Array Size 10000
-    arr1.extend(50000);
-    
+    arr1.extend(100000);
+
     arr1.shuffleArr();
 
     double time = arr1.trackSelectionSort();
