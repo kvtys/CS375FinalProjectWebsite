@@ -131,22 +131,60 @@ void mergeSort(int arr[], int low, int high){ //O(nlogn) guarantee
 }
 
 
+void randomizeArr(int arr[], int size){
+    for(int i = 0; i < size; i++){
+        arr[i] = rand() % 10000;
+    }
+}
 
 int main(int argc, char * argv[]){
 
     cout << "Sorting.. In Main:" << endl;
-    int arr[4] = {3,2,1,4};
-
-   
-    printArr(arr, 4);
+    //int size = 100000000; //1 Billion
+    //int arr[size]; cant fit a billion on the stack
+    //int size = 100000; //Hundred Thousand Takes Over a Minute Total Execution
+    int size = 10000; //Ten Thousand Takes About a second total
+    int *arr = new int[size];
+    randomizeArr(arr, size);
+  
     auto start = std::chrono::high_resolution_clock::now();
-    mergeSort(arr, 0, 3);
+    selectionSort(arr, size);
     auto end = std::chrono::high_resolution_clock::now();
-    printArr(arr, 4);
-
     std::chrono::duration<double> duration = end - start;
+    cout << "selectionSort Execution Time: " << duration.count() << endl;
 
-    cout << "MergeSort Execution Time: " << duration << endl;
-    
+    randomizeArr(arr, size);
+
+    start = std::chrono::high_resolution_clock::now();
+    insertionSort(arr, size);
+    end = std::chrono::high_resolution_clock::now();
+    duration = end - start;
+    cout << "insertionSort Execution Time: " << duration.count() << endl;
+
+
+    randomizeArr(arr, size);
+
+    start = std::chrono::high_resolution_clock::now();
+    bubbleSort(arr, size);
+    end = std::chrono::high_resolution_clock::now();
+    duration = end - start;
+    cout << "bubbleSort Execution Time: " << duration.count() << endl;
+
+    randomizeArr(arr, size);
+
+    start = std::chrono::high_resolution_clock::now();
+    quickSort(arr, 0, size-1);
+    end = std::chrono::high_resolution_clock::now();
+    duration = end - start;
+    cout << "quickSort Execution Time: " << duration.count() << endl;
+
+    randomizeArr(arr, size);
+
+    start = std::chrono::high_resolution_clock::now();
+    mergeSort(arr, 0, size-1);
+    end = std::chrono::high_resolution_clock::now();
+    duration = end - start;
+    cout << "mergeSort Execution Time: " << duration.count() << endl;
+
     return 0;
 }
