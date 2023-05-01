@@ -68,10 +68,10 @@ int qPartition(int arr[], int low, int high){
     for (int j = low; j <= high - 1; j++) {
         if (arr[j] < piv) {
             i++;
-            swap(arr[i], arr[j]);
+            swap(arr, i, j);
         }
     }
-    swap(arr[i + 1], arr[high]);
+    swap(arr, i+1, high);
     return i + 1;
 }
 
@@ -133,7 +133,7 @@ void mergeSort(int arr[], int low, int high){ //O(nlogn) guarantee
 
 void randomizeArr(int arr[], int size){
     for(int i = 0; i < size; i++){
-        arr[i] = rand() % 10000;
+        arr[i] = rand() % 100;
     }
 }
 
@@ -143,7 +143,8 @@ int main(int argc, char * argv[]){
     //int size = 100000000; //1 Billion
     //int arr[size]; cant fit a billion on the stack
     //int size = 100000; //Hundred Thousand Takes Over a Minute Total Execution
-    int size = 10000; //Ten Thousand Takes About a second total
+    //int size = 10000; //Ten Thousand Takes About a second total
+    int size = 10; 
     int *arr = new int[size];
     randomizeArr(arr, size);
   
@@ -171,11 +172,12 @@ int main(int argc, char * argv[]){
     cout << "bubbleSort Execution Time: " << duration.count() << endl;
 
     randomizeArr(arr, size);
-
+    //printArr(arr, size);
     start = std::chrono::high_resolution_clock::now();
     quickSort(arr, 0, size-1);
     end = std::chrono::high_resolution_clock::now();
     duration = end - start;
+    //printArr(arr, size);
     cout << "quickSort Execution Time: " << duration.count() << endl;
 
     randomizeArr(arr, size);
