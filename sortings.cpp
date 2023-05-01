@@ -137,56 +137,87 @@ void randomizeArr(int arr[], int size){
     }
 }
 
+double trackSelectionSort(int arr[], int size){
+    auto start = std::chrono::high_resolution_clock::now();
+    selectionSort(arr, size);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    return duration.count();
+}
+
+double trackInsertionSort(int arr[], int size){
+    auto start = std::chrono::high_resolution_clock::now();
+    insertionSort(arr, size);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    return duration.count();
+}
+
+double trackBubbleSort(int arr[], int size){
+    auto start = std::chrono::high_resolution_clock::now();
+    bubbleSort(arr, size);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    return duration.count();
+}
+
+double trackQuickSort(int arr[], int low, int high){
+    auto start = std::chrono::high_resolution_clock::now();
+    quickSort(arr, low, high);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    return duration.count();
+}
+
+double trackMergeSort(int arr[], int low, int high){
+    auto start = std::chrono::high_resolution_clock::now();
+    mergeSort(arr, low, high);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    return duration.count();
+}
+
+
 int main(int argc, char * argv[]){
 
     cout << "Sorting.. In Main:" << endl;
     //int size = 100000000; //1 Billion
     //int arr[size]; cant fit a billion on the stack
     //int size = 100000; //Hundred Thousand Takes Over a Minute Total Execution
-    int size = 10000; //Ten Thousand Takes About a second total
+    //int size = 10000; //Ten Thousand Takes About a second total
+    int size = 20000;
     //int size = 10; 
     int *arr = new int[size];
     randomizeArr(arr, size);
-  
-    auto start = std::chrono::high_resolution_clock::now();
-    selectionSort(arr, size);
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> duration = end - start;
-    cout << "selectionSort Execution Time: " << duration.count() << endl;
+    
+    double time = trackSelectionSort(arr, size);
+    cout << "selectionSort Execution Time: " <<  time << endl;
 
     randomizeArr(arr, size);
 
-    start = std::chrono::high_resolution_clock::now();
-    insertionSort(arr, size);
-    end = std::chrono::high_resolution_clock::now();
-    duration = end - start;
-    cout << "insertionSort Execution Time: " << duration.count() << endl;
+    time = trackInsertionSort(arr, size);
+    cout << "insertionSort Execution Time: " << time << endl;
 
 
     randomizeArr(arr, size);
 
-    start = std::chrono::high_resolution_clock::now();
-    bubbleSort(arr, size);
-    end = std::chrono::high_resolution_clock::now();
-    duration = end - start;
-    cout << "bubbleSort Execution Time: " << duration.count() << endl;
+    time = trackBubbleSort(arr, size);
+    cout << "bubbleSort Execution Time: " << time << endl;
 
     randomizeArr(arr, size);
-    //printArr(arr, size);
-    start = std::chrono::high_resolution_clock::now();
-    quickSort(arr, 0, size-1);
-    end = std::chrono::high_resolution_clock::now();
-    duration = end - start;
-    //printArr(arr, size);
-    cout << "quickSort Execution Time: " << duration.count() << endl;
+   
+    time = trackQuickSort(arr, 0, size-1);
+    cout << "quickSort Execution Time: " << time << endl;
 
     randomizeArr(arr, size);
 
-    start = std::chrono::high_resolution_clock::now();
-    mergeSort(arr, 0, size-1);
-    end = std::chrono::high_resolution_clock::now();
-    duration = end - start;
-    cout << "mergeSort Execution Time: " << duration.count() << endl;
+    time = trackMergeSort(arr, 0, size-1);
+    cout << "mergeSort Execution Time: " << time << endl;
 
     return 0;
 }
