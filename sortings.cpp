@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <iostream>
+#include <chrono>
 
 using namespace std;
 
@@ -130,15 +131,22 @@ void mergeSort(int arr[], int low, int high){ //O(nlogn) guarantee
 }
 
 
+
 int main(int argc, char * argv[]){
 
     cout << "Sorting.. In Main:" << endl;
     int arr[4] = {3,2,1,4};
 
+   
     printArr(arr, 4);
+    auto start = std::chrono::high_resolution_clock::now();
     mergeSort(arr, 0, 3);
+    auto end = std::chrono::high_resolution_clock::now();
     printArr(arr, 4);
 
+    std::chrono::duration<double> duration = end - start;
 
+    cout << "MergeSort Execution Time: " << duration << endl;
+    
     return 0;
 }
