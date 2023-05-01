@@ -143,8 +143,8 @@ int main(int argc, char * argv[]){
     //int size = 100000000; //1 Billion
     //int arr[size]; cant fit a billion on the stack
     //int size = 100000; //Hundred Thousand Takes Over a Minute Total Execution
-    //int size = 10000; //Ten Thousand Takes About a second total
-    int size = 10; 
+    int size = 10000; //Ten Thousand Takes About a second total
+    //int size = 10; 
     int *arr = new int[size];
     randomizeArr(arr, size);
   
