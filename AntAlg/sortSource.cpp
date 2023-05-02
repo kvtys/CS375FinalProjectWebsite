@@ -9,14 +9,16 @@ void swap(int arr[], int i, int j) { //Helper Function
 }
 
 void selectionSort(int arr[], int size){ // O(n^2)
-    int temp;
+    int tempMin;
 
     for(int i = 0; i < size-1; i++){
+        tempMin = i;
         for(int j = i+1; j < size; j++){
-            if(arr[i] > arr[j]){
-                swap(arr, i, j);
+            if(arr[tempMin] > arr[j]){
+                tempMin = j;
             }
         }
+        swap(arr, tempMin, j);
     }
 
     return;
@@ -39,9 +41,9 @@ void insertionSort(int arr[], int size){ // O(n^2), can be O(n) in some cases
 void bubbleSort(int arr[], int size) // O(n^2), can be O(n) in some cases
 {
     int temp;
-    for(int i = 1; i < size; ++i)     
+    for(int i = 0; i < size-1; ++i)     
     {   
-        for(int j = 0; j < (size - i); ++j)  
+        for(int j = 0; j < (size - i - 1); ++j)  
         {   
             if(arr[j] > arr[j + 1]){
                 swap(arr, j, j+1);
