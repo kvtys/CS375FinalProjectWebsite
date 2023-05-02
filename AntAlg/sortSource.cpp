@@ -18,7 +18,7 @@ void selectionSort(int arr[], int size){ // O(n^2)
                 tempMin = j;
             }
         }
-        swap(arr, tempMin, j);
+        swap(arr, tempMin, i);
     }
 
     return;
