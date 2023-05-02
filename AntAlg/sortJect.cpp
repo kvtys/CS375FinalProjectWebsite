@@ -35,6 +35,26 @@ void sortJect::shuffleArr(int limit){
     }
 }
 
+void sortJect::nearlySorted(){
+    //default lowest capacity is 10
+    int temp;
+    int half = capacity/2; //= 5 For 10 
+    int end = capacity-1;
+    int start = 0;
+
+    temp = arr[half]; //1
+    arr[half] = arr[end-1];
+    arr[end-1] = temp;
+
+    temp = arr[half-1]; //2
+    arr[half-1] = arr[start+1];
+    arr[start+1] = temp;
+
+    temp = arr[half+1]; //3
+    arr[half+1] = arr[end-2];
+    arr[end-2] = temp;
+}
+
 void sortJect::printArr(){
     for(int i = 0; i < capacity; i++){
         cout << arr[i] << " ";

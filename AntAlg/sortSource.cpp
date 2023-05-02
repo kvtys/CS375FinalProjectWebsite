@@ -41,14 +41,18 @@ void insertionSort(int arr[], int size){ // O(n^2), can be O(n) in some cases
 void bubbleSort(int arr[], int size) // O(n^2), can be O(n) in some cases
 {
     int temp;
+    bool swapped = true;
     for(int i = 0; i < size-1; ++i)     
     {   
+        swapped = false;
         for(int j = 0; j < (size - i - 1); ++j)  
         {   
             if(arr[j] > arr[j + 1]){
                 swap(arr, j, j+1);
+                swapped = true;
             }
         }
+        if(swapped == false){break;} //If we do a whole pass with no swaps, its sorted and we are O(n)
     }
 }
 

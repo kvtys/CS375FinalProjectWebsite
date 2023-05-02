@@ -15,6 +15,7 @@ class sortJect{
         ~sortJect();
         void extend(int capacity = 10); //Only Extends Array Size
         void shuffleArr(int limit = 100); //Shuffle is not automatic, so be warned!!
+        void nearlySorted(); //Will swap 3 positions in an array //Sort array before using this!
         void printArr();
         int getCapacity();
         double trackSelectionSort();
