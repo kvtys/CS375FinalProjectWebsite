@@ -2,8 +2,8 @@
 <html>
   <body>
 
-    <form #algoForm="ngForm" (ngSubmit)="chooseAlgo(algoForm.value)">
-      <label for="arr">Array (Seperate digits with commas) :</label><br>
+    <form #algoForm="ngForm" (ngSubmit)="chooseAlgo(algoForm.value)"> 
+      <label for="arr">Array (Seperate digits with commas, add space before first number) :</label><br>
       <input type="text" id="arr" name="arr" ngModel><br>
       <label for="algo">Enter Number (1 - Bubble Sort, 2 - Selection Sort, 3 - Insertion Sort) :</label><br>
       <input type="text" id="algo" name="algo" ngModel><br>
