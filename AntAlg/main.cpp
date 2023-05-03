@@ -38,6 +38,7 @@ int main(int argc, char * argv[]){ //Some Demonstrated Use of the Class "sortJec
     cout << "In Main: Testing sortJect via Nearly Sorted Array[" << arr1.getCapacity() << "]" << endl;
 
     arr1.nearlySorted();
+    time = arr1.trackSelectionSort();
     cout << "Selection Sort Time: " << time << endl;
     //arr1.printArr();
     arr1.nearlySorted();
@@ -62,7 +63,7 @@ int main(int argc, char * argv[]){ //Some Demonstrated Use of the Class "sortJec
 
     cout << "In Main: Testing sortJect via Sorted Array[" << arr1.getCapacity() << "]" << endl;
 
-
+    time = arr1.trackSelectionSort();
     cout << "Selection Sort Time: " << time << endl;
     //arr1.printArr();
   
