@@ -11,10 +11,12 @@ export class AppComponent {
   title = 'SortAlgoWeb';
   newArr: number[];
   step: string;
+  partition: string;
 
   constructor(private http: HttpClient, private router: Router){
     this.newArr = [0];
     this.step = "";
+    this.partition = "";
   }
   
 
@@ -27,25 +29,27 @@ export class AppComponent {
   }
 
   async selectionSort(arr: number[]): Promise<number[]>{
+    this.step = "";
       const size = arr.length;
       let c = 0;
       for (let i = 0; i < size - 1; i++) {
           for (let j = i + 1; j < size; j++) {
               if (arr[i] > arr[j]) { 
                 this.swap(arr, i, j);
-                this.step = `Step ${c + 1}: Swap ${arr[i]} and ${arr[j]} to get ${arr.join(', ')}`; //this will show up on the website itself, showing intermediate steps 
+                this.step = this.step + ' --> ' + `Step ${c + 1}: Swap ${arr[i]} and ${arr[j]} to get ${arr.join(', ')}`; //this will show up on the website itself, showing intermediate steps 
                 await this.delay(2000);
                 c++;
               }
           }
       }
-
+      this.step = this.step + " --> Finished! ";
       return arr;
   }
 
   insertionSort(arr: number[]): number[] {
+    this.step = "";
       const size = arr.length;
-
+      let c = 0;
       for (let i = 1; i < size; i++) {
           const key = arr[i];
           let j = i - 1;
@@ -55,8 +59,10 @@ export class AppComponent {
               j--;
           }
           arr[j + 1] = key;
+          this.step = this.step + ' --> ' + `Step ${c + 1}: Insert ${arr[j+1]} after ${arr[j]} to get ${arr.join(', ')}`;
       }
 
+      this.step = this.step + " --> Finished!";
       return arr;
   }
 
@@ -65,6 +71,7 @@ export class AppComponent {
   }
   
   async bubbleSort(arr: number[]): Promise<number[]> {
+    this.step = "";
     console.log("this is the starting arr " + arr.toString());
     const n = arr.length;
     let swapped: boolean;
@@ -80,7 +87,7 @@ export class AppComponent {
 
           this.swap(arr, j, j+1);
           swapped = true;
-          this.step = `Step ${c + 1}: Swap ${arr[j+1]} and ${arr[j]} to get ${arr.join(', ')}`; //this will show up on the website itself, showing intermediate steps 
+          this.step = this.step + ' --> ' + `Step ${c + 1}: Swap ${arr[j+1]} and ${arr[j]} to get ${arr.join(', ')}`; //this will show up on the website itself, showing intermediate steps 
           await this.delay(2000);
           c++;
         }
@@ -92,7 +99,7 @@ export class AppComponent {
       }
 
     }
-
+    this.step = this.step + " --> Finished! ";
     console.log("this is the end arr: " + arr);
     return arr;
   }
@@ -112,13 +119,22 @@ export class AppComponent {
       return i + 1;
   }
 
-  quickSort(arr: number[], low: number, high: number): number[] {
+  async quickSort(arr: number[], low: number, high: number): Promise<number[]> {
+      let c = 0;
       if (low < high) {
           const q_p = this.qPartition(arr, low, high);
+          this.partition = "Partition: " + q_p.toString();
+          await this.delay(2000);
           this.quickSort(arr, low, q_p - 1); // QS left
+          this.step = this.step + " --> " +  `Step ${c + 1}: Quicksorted left: ${arr.join(', ')}`;
+          await this.delay(2000);
           this.quickSort(arr, q_p + 1, high); // QS right
+          this.step = this.step + " --> " +  `Step ${c + 1}: Quicksorted right: ${arr.join(', ')}`;
+          await this.delay(2000)
+          c++;
       }
-    
+
+
     return arr;
   }
 
@@ -180,8 +196,15 @@ export class AppComponent {
       else if(message.algo == 2){
         console.log(this.selectionSort(this.newArr));
       }
+      else if(message.algo == 3){
+        console.log(this.insertionSort(this.newArr));
+      }
+      else if(message.algo ==4){
+        console.log(this.quickSort(this.newArr, 0, this.newArr.length - 1));
+      }
     }
     else{
+      this.step = "Not a proper number!";
       return [0];
     }
 
