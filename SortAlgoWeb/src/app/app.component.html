@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      .center-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+      }
+      input{
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      button{
+        margin-top: 20px;
+      }
+    </style>
+  </head>
   <body>
-
+    <div class="center-content">
     <form #algoForm="ngForm" (ngSubmit)="chooseAlgo(algoForm.value)"> 
-      <label for="arr">Array (Seperate digits with commas, add space before first number) :</label><br>
+      <label for="arr">Array (Seperate digits with comma and space, add space before first number ex. ' 5, 2, 3, 1, 4') :</label><br>
       <input type="text" id="arr" name="arr" ngModel><br>
-      <label for="algo">Enter Number (1 - Bubble Sort, 2 - Selection Sort, 3 - Insertion Sort) :</label><br>
+      <label for="algo">Enter Number (1 - Bubble Sort, 2 - Selection Sort, 3 - Insertion Sort, 4 - QuickSort, 5 - MergeSort) :</label><br>
       <input type="text" id="algo" name="algo" ngModel><br>
       <button type="submit">Solve</button>
     </form>
@@ -16,7 +35,7 @@
     <p>
       {{ partition }}
     </p>
-
+    </div>
   </body>
 </html>
 

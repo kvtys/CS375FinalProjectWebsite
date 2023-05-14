@@ -46,7 +46,7 @@ export class AppComponent {
       return arr;
   }
 
-  insertionSort(arr: number[]): number[] {
+  async insertionSort(arr: number[]): Promise<number[]> {
     this.step = "";
       const size = arr.length;
       let c = 0;
@@ -60,6 +60,8 @@ export class AppComponent {
           }
           arr[j + 1] = key;
           this.step = this.step + ' --> ' + `Step ${c + 1}: Insert ${arr[j+1]} after ${arr[j]} to get ${arr.join(', ')}`;
+          await this.delay(2000);
+          c++;
       }
 
       this.step = this.step + " --> Finished!";
@@ -104,76 +106,83 @@ export class AppComponent {
     return arr;
   }
 
-  qPartition(arr: number[], low: number, high: number): number {
-      const piv = arr[high];
-      let i = low - 1;
-
-      for (let j = low; j < high; j++) {
-          if (arr[j] < piv) {
-              i++;
-              this.swap(arr, i, j);
-          }
+  async qPartition(arr: number[], left: number, right: number): Promise<number> {
+    let pivot   = arr[Math.floor((right + left) / 2)], 
+        i       = left, 
+        j       = right;
+    
+    while (i <= j) {
+      while (arr[i] < pivot) {
+        i++;
       }
-
-      this.swap(arr, i + 1, high);
-      return i + 1;
+      while (arr[j] > pivot) {
+        j--;
+      }
+      if (i <= j) {
+        [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap values
+        this.step = this.step + `--> Swapped ${arr[j]} and ${arr[i]}: to get ${arr.join(', ')} with pivot ${pivot}`;
+        await this.delay(2000);
+        i++;
+        j--;
+      }
+    }
+    return i;
   }
 
-  async quickSort(arr: number[], low: number, high: number): Promise<number[]> {
-      let c = 0;
-      if (low < high) {
-          const q_p = this.qPartition(arr, low, high);
-          this.partition = "Partition: " + q_p.toString();
-          await this.delay(2000);
-          this.quickSort(arr, low, q_p - 1); // QS left
-          this.step = this.step + " --> " +  `Step ${c + 1}: Quicksorted left: ${arr.join(', ')}`;
-          await this.delay(2000);
-          this.quickSort(arr, q_p + 1, high); // QS right
-          this.step = this.step + " --> " +  `Step ${c + 1}: Quicksorted right: ${arr.join(', ')}`;
-          await this.delay(2000)
-          c++;
+  
+  async quickSort(arr: number[], left = 0, right = arr.length - 1): Promise<number[]> {
+    let index;
+    let c = 0;
+    if (arr.length > 1) {
+      index = await this.qPartition(arr, left, right); 
+      if (left < index - 1) { 
+        this.quickSort(arr, left, index - 1);
       }
-
-
+      if (index < right) { 
+        this.quickSort(arr, index, right);
+      }
+    }
     return arr;
   }
 
-  merge(arr: number[], low: number, middle: number, high: number): number[] {
-      let x = 0;
-      let y = 0;
-      let z = low;
-
-      const size_sub1 = middle - low + 1;
-      const size_sub2 = high - middle;
-
-      const sub1 = arr.slice(low, low + size_sub1);
-      const sub2 = arr.slice(middle + 1, middle + 1 + size_sub2);
-
-      while (x < size_sub1 && y < size_sub2) {
-          if (sub1[x] <= sub2[y]) {
-              arr[z] = sub1[x];
-              x++;
-          } else {
-              arr[z] = sub2[y];
-              y++;
-          }
-          z++;
-      }
-
-      while (x < size_sub1) {
-          arr[z] = sub1[x];
-          x++;
-          z++;
-      }
-
-      while (y < size_sub2) {
-          arr[z] = sub2[y];
-          y++;
-          z++;
-      }
-
+  async mergeSort(arr: number[]): Promise<number[]> {
+    if (arr.length <= 1) {
       return arr;
+    }
+
+    const mid = Math.floor(arr.length / 2);
+    const left = arr.slice(0, mid);
+    const right = arr.slice(mid);
+
+    return await this.merge1(
+      await this.mergeSort(left),
+      await this.mergeSort(right)
+    );
   }
+
+  async merge1(left: number[], right: number[]): Promise<number[]> {
+    let resultArray = [], leftIndex = 0, rightIndex = 0;
+
+    while (leftIndex < left.length && rightIndex < right.length) {
+      if (left[leftIndex] < right[rightIndex]) {
+        resultArray.push(left[leftIndex]);
+        leftIndex++;
+      } else {
+        resultArray.push(right[rightIndex]);
+        rightIndex++;
+      }
+    }
+
+    // Concatenating the remaining elements, in case one array was larger
+    const result = resultArray
+      .concat(left.slice(leftIndex))
+      .concat(right.slice(rightIndex));
+    
+    this.step = this.step + ' --> Current merged array:' + result;
+    await this.delay(2000);
+    return result;
+  }
+
 
   chooseAlgo(message: {arr: any, algo: number}): number[] {
     if(message.arr != ""){
@@ -200,12 +209,17 @@ export class AppComponent {
         console.log(this.insertionSort(this.newArr));
       }
       else if(message.algo ==4){
+        this.step = "";
         console.log(this.quickSort(this.newArr, 0, this.newArr.length - 1));
       }
-    }
-    else{
-      this.step = "Not a proper number!";
-      return [0];
+      else if(message.algo ==5){
+        this.step = "";
+        console.log(this.mergeSort(this.newArr));
+      }
+      else{
+        this.step = "Not a proper number!";
+        return [0];
+      }
     }
 
     return[0];
